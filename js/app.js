@@ -130,7 +130,7 @@ function handleAnswer(e) {
 
 // Quiz initialization
 function initializeQuiz() {
-  shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+  shuffledQuestions = [...allQuestions].sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
   correctCount = 0;
