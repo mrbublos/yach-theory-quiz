@@ -157,7 +157,7 @@ function resetQuestionState() {
 function initImageGallery() {
   const imageFiles = [
     '1-19.svg', '20-39.svg', '40-58.svg',
-    '59-74.svg', '75-90.svg', '91-110.svg', '111-126.svg'
+    '59-74.svg', '75-90.svg', '91-110.svg', '111-126.svg', 'basic_light.svg', 'boats.svg'
   ];
 
   const buttonsContainer = document.getElementById('image-buttons');
@@ -169,7 +169,7 @@ function initImageGallery() {
   imageFiles.forEach(file => {
     const btn = document.createElement('button');
     btn.className = 'gallery-button';
-    btn.textContent = file.replace('.svg', '');
+    btn.textContent = file.replace('.svg', '').replace('_', ' ');
     btn.addEventListener('click', () => showImageModal(file));
     buttonsContainer.appendChild(btn);
   });
