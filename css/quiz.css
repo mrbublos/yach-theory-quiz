@@ -197,3 +197,64 @@
 .correct-answer {
   border: 2px solid #4caf50 !important;
 }
+/* Image Gallery Styles */
+.image-gallery {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.gallery-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.gallery-button {
+  padding: 0.5rem;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gallery-button:hover {
+  background: #e0e0e0;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  border-radius: 4px;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.full-image {
+  width: 100%;
+  height: 80vh;
+  border: 1px solid #ddd;
+}

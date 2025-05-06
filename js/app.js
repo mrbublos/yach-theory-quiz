@@ -152,3 +152,45 @@ function resetQuestionState() {
     btn.classList.remove('correct', 'incorrect');
   });
 }
+
+// Image Gallery Functionality
+function initImageGallery() {
+  const imageFiles = [
+    '1-19.svg', '20-39.svg', '40-58.svg',
+    '59-74.svg', '75-90.svg', '91-110.svg', '111-126.svg'
+  ];
+
+  const buttonsContainer = document.getElementById('image-buttons');
+  const modal = document.getElementById('image-modal');
+  const closeBtn = document.querySelector('.close');
+  const modalImage = document.getElementById('modal-image');
+
+  // Create gallery buttons
+  imageFiles.forEach(file => {
+    const btn = document.createElement('button');
+    btn.className = 'gallery-button';
+    btn.textContent = file.replace('.svg', '');
+    btn.addEventListener('click', () => showImageModal(file));
+    buttonsContainer.appendChild(btn);
+  });
+
+  // Modal controls
+  closeBtn.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+}
+
+async function showImageModal(filename) {
+  try {
+    const response = await fetch(`pics/${filename}`);
+    const svgContent = await response.text();
+    document.getElementById('modal-image').innerHTML = svgContent;
+    document.getElementById('image-modal').style.display = 'block';
+  } catch (error) {
+    console.error('Error loading image:', error);
+  }
+}
+
+// Initialize gallery after DOM loads
+document.addEventListener('DOMContentLoaded', initImageGallery);

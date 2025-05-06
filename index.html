@@ -40,9 +40,20 @@
         <div id="progress" aria-live="polite">
             <span class="current-question">0</span>/<span class="total-questions">0</span>
         </div>
+        <section class="image-gallery">
+            <h2>Reference Images</h2>
+            <div class="gallery-buttons" id="image-buttons"></div>
+        </section>
     </main>
 
     <script src="questions.js"></script>
     <script src="js/app.js"></script>
+
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <svg id="modal-image" class="full-image"></svg>
+        </div>
+    </div>
 </body>
 </html>
