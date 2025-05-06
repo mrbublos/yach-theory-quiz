@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <h1 id="quiz-title" aria-live="polite">Quiz</h1>
+        
+        <div class="question-container">
+            <div id="question" aria-live="polite" role="alert"></div>
+            <div id="image-container" aria-label="Question diagram" aria-live="polite" role="img">
+                <div class="loading-indicator" hidden>
+                    <div class="spinner"></div>
+                    <span>Loading diagram...</span>
+                </div>
+                <div class="error-display" hidden>
+                    <span class="error-icon">⚠️</span>
+                    <span class="error-message">Failed to load diagram</span>
+                </div>
+                <svg class="quiz-image" data-current-file="" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+        </div>
+
+        <div class="answers-grid" role="group" aria-labelledby="question">
+            <!-- Answers will be populated by JavaScript -->
+        </div>
+
+        <div class="navigation">
+            <button id="prev-btn" aria-label="Previous question">Previous</button>
+            <button id="next-btn" aria-label="Next question">Next</button>
+        </div>
+
+        <div class="score-display" aria-live="polite">
+            Score: <span id="score">0</span>
+        </div>
+        <div id="progress" aria-live="polite">
+            <span class="current-question">0</span>/<span class="total-questions">0</span>
+        </div>
+    </main>
+
+    <script src="questions.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
