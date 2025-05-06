@@ -1,0 +1,14 @@
+{
+  "name": "mashitquiz",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "surge": "^0.24.6"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
