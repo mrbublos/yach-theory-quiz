@@ -9,10 +9,26 @@
 }
 
 /* Base layout */
+main {
+  max-width: calc(100% - 220px);
+  padding-right: 220px;
+}
+
 .quiz-container {
   max-width: 100%;
   padding: 1rem;
   margin: 0 auto;
+}
+
+.question-header {
+  margin-bottom: 1.5rem;
+}
+
+.question-id {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
 }
 
 .question-text {
@@ -163,6 +179,18 @@
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   font-weight: bold;
+}
+
+/* Sidebar styling */
+.stats-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  padding: 20px;
+  background: #f8f9fa;
+  border-left: 1px solid #dee2e6;
 }
 
 /* Tablet and larger */

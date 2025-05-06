@@ -1,6 +1,9 @@
 // Initialize quiz state
 let currentQuestionIndex = 0;
 let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let shuffledQuestions = [];
 
 // State management functions
 function saveState() {
@@ -16,12 +19,12 @@ function loadState() {
     const { currentQuestionIndex: savedIndex, score: savedScore } = JSON.parse(saved);
     currentQuestionIndex = savedIndex;
     score = savedScore;
-    scoreEl.textContent = `Score: ${score}`;
+//    scoreEl.textContent = `Score: ${score}`;
   }
 }
 
 // DOM elements
-const questionEl = document.getElementById("question");
+const questionEl = document.getElementById("question-text");
 const optionsEl = document.querySelector(".answers-grid");
 const scoreEl = document.getElementById("score");
 const prevBtn = document.getElementById('prev-btn');
@@ -63,10 +66,11 @@ async function loadSVGFigure(file, figureNumber) {
 }
 
 function showQuestion() {
-  const question = questions[currentQuestionIndex];
+  const question = shuffledQuestions[currentQuestionIndex];
+  document.getElementById('current-qid').textContent = question.id;
   questionEl.textContent = question.question;
-  currentQuestionEl.textContent = currentQuestionIndex + 1;
-  totalQuestionsEl.textContent = questions.length;
+//  currentQuestionEl.textContent = currentQuestionIndex + 1;
+//  totalQuestionsEl.textContent = questions.length;
   
   optionsEl.innerHTML = question.options.map(opt => `
     <button class="option" data-letter="${opt.letter}">
@@ -95,7 +99,7 @@ function showQuestion() {
 
 function handleAnswer(e) {
   const selectedButton = e.target;
-  const question = questions[currentQuestionIndex];
+  const question = shuffledQuestions[currentQuestionIndex];
   const correctButton = Array.from(optionsEl.children).find(
     btn => btn.dataset.letter === question.correctAnswer
   );
@@ -106,8 +110,10 @@ function handleAnswer(e) {
   if (selectedButton.dataset.letter === question.correctAnswer) {
     selectedButton.classList.add('correct');
     score++;
+    correctCount++;
   } else {
     selectedButton.classList.add('incorrect');
+    wrongCount++;
   }
 
   // Scroll to correct answer if not fully visible
@@ -118,13 +124,29 @@ function handleAnswer(e) {
     btn.disabled = true;
   });
 
-  scoreEl.textContent = `Score: ${score}`;
+  updateStatsDisplay();
   saveState();
+}
+
+// Quiz initialization
+function initializeQuiz() {
+  shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  score = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  updateStatsDisplay();
+  showQuestion();
+}
+
+function updateStatsDisplay() {
+  document.getElementById('correct-count').textContent = correctCount;
+  document.getElementById('wrong-count').textContent = wrongCount;
 }
 
 // Start quiz
 loadState();
-showQuestion();
+initializeQuiz();
 
 // Navigation handlers
 prevBtn.addEventListener('click', () => {

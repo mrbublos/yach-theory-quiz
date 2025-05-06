@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>Теория машит 30</title>
     <link rel="stylesheet" href="css/quiz.css">
 </head>
 <body>
+    <aside class="stats-sidebar">
+      <div class="stats">
+        <h3>Чо как идет</h3>
+        <div>Попал: <span id="correct-count">0</span></div>
+        <div>Мимо: <span id="wrong-count">0</span></div>
+      </div>
+    </aside>
+
     <main class="quiz-container" role="main">
         <h1 id="quiz-title" aria-live="polite">Вопросы для машит 30</h1>
         
         <div class="question-container">
-            <div id="question" aria-live="polite" role="alert"></div>
+            <div class="question-header">
+              <span class="question-id">Вопрос <span id="current-qid"></span></span>
+              <h2 id="question-text"></h2>
+            </div>
             <div id="image-container" aria-label="Question diagram" aria-live="polite" role="img">
 <!--                <div class="loading-indicator" hidden>-->
 <!--                    <div class="spinner"></div>-->
@@ -34,12 +45,6 @@
             <button id="next-btn" aria-label="Next question">Next</button>
         </div>
 
-        <div class="score-display" aria-live="polite">
-            Score: <span id="score">0</span>
-        </div>
-        <div id="progress" aria-live="polite">
-            <span class="current-question">0</span>/<span class="total-questions">0</span>
-        </div>
         <section class="image-gallery">
             <h2>Reference Images</h2>
             <div class="gallery-buttons" id="image-buttons"></div>
