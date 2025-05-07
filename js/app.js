@@ -55,7 +55,7 @@ function showQuestion() {
 
   // Update navigation state
   prevBtn.disabled = currentQuestionIndex === 0;
-  nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+  nextBtn.disabled = currentQuestionIndex === allQuestions.length - 1;
 }
 
 function renderGalleryButton(imageRef) {
