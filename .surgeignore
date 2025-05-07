@@ -5,3 +5,4 @@ node_modules
 .gitignore
 mashitquiz.iml
 package-lock.json
+memory-bank
