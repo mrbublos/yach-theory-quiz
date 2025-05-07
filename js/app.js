@@ -9,24 +9,6 @@ let wrongCount = 0;
 let shuffledQuestions = [];
 const performanceTracker = new QuestionPerformance();
 
-// State management functions
-function saveState() {
-  localStorage.setItem('quizProgress', JSON.stringify({
-    currentQuestionIndex,
-    score
-  }));
-}
-
-function loadState() {
-  const saved = localStorage.getItem('quizProgress');
-  if (saved) {
-    const { currentQuestionIndex: savedIndex, score: savedScore } = JSON.parse(saved);
-    currentQuestionIndex = savedIndex;
-    score = savedScore;
-//    scoreEl.textContent = `Score: ${score}`;
-  }
-}
-
 // DOM elements
 const questionEl = document.getElementById("question-text");
 const optionsEl = document.querySelector(".answers-grid");
@@ -38,37 +20,6 @@ const imageContainer = document.getElementById('image-container');
 const svgEl = document.querySelector('.quiz-image');
 const currentQuestionEl = document.querySelector('.current-question');
 const totalQuestionsEl = document.querySelector('.total-questions');
-
-async function loadSVGFigure(file, figureNumber) {
-  try {
-    // Show loading state
-    imageContainer.classList.add('loading');
-    
-    // Fetch SVG file
-    const response = await fetch(`lights/${file}`);
-    if (!response.ok) throw new Error('Failed to fetch SVG');
-    const svgText = await response.text();
-    const parser = new DOMParser();
-    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-    
-    // Find target figure
-    const figure = svgDoc.getElementById(`fig${figureNumber}`);
-    if (!figure) throw new Error('Figure not found');
-    
-    // Clear and append new SVG content
-    svgEl.innerHTML = '';
-    svgEl.append(...figure.children);
-    svgEl.dataset.currentFile = file;
-    
-    // Update styles
-    imageContainer.classList.remove('error', 'loading');
-    imageContainer.classList.add('has-image');
-  } catch (error) {
-    imageContainer.classList.remove('loading');
-    imageContainer.classList.add('error');
-    console.error('SVG load error:', error);
-  }
-}
 
 function showQuestion() {
   const question = shuffledQuestions[currentQuestionIndex];
@@ -95,7 +46,7 @@ function showQuestion() {
 
   // Handle image display
   if (question.imageRef) {
-    loadSVGFigure(question.imageRef.file, question.imageRef.number);
+    renderGalleryButton(question.imageRef)
   } else {
     imageContainer.classList.remove('has-image', 'error');
     svgEl.innerHTML = '';
@@ -105,6 +56,9 @@ function showQuestion() {
   // Update navigation state
   prevBtn.disabled = currentQuestionIndex === 0;
   nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+}
+
+function renderGalleryButton(imageRef) {
 }
 
 function handleAnswer(e) {
@@ -140,7 +94,6 @@ function handleAnswer(e) {
 
   updateStatsDisplay();
   updateHeatmap();
-  saveState();
 }
 
 // Quiz initialization
@@ -164,7 +117,6 @@ function updateStatsDisplay() {
 }
 
 // Start quiz
-loadState();
 initializeQuiz();
 
 // Navigation handlers
@@ -173,7 +125,6 @@ prevBtn.addEventListener('click', () => {
     currentQuestionIndex--;
     resetQuestionState();
     showQuestion();
-    saveState();
   }
 });
 
@@ -182,7 +133,6 @@ nextBtn.addEventListener('click', () => {
     currentQuestionIndex++;
     resetQuestionState();
     showQuestion();
-    saveState();
   }
 });
 
@@ -227,10 +177,21 @@ function initImageGallery() {
   });
 }
 
-async function showImageModal(filename) {
-  try {
+const svgCache = {};
+async function loadSvg(filename) {
+    if (svgCache[filename]) {
+        return svgCache[filename];
+    }
+
     const response = await fetch(`pics/${filename}`);
     const svgContent = await response.text();
+    return svgCache[filename] = svgContent;
+}
+
+
+async function showImageModal(filename) {
+  try {
+    const svgContent = loadSvg(filename);
     document.getElementById('modal-image').innerHTML = svgContent;
     
     // Show the modal
@@ -456,8 +417,7 @@ function updateHeatmap() {
         currentQuestionIndex = index;
         resetQuestionState();
         showQuestion();
-        saveState();
-        
+
         // Scroll the question into view
         document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
       }
