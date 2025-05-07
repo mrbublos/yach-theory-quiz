@@ -26,7 +26,8 @@ function loadState() {
 // DOM elements
 const questionEl = document.getElementById("question-text");
 const optionsEl = document.querySelector(".answers-grid");
-const scoreEl = document.getElementById("score");
+const correctBadge = document.getElementById("correct-badge");
+const wrongBadge = document.getElementById("wrong-badge");
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const imageContainer = document.getElementById('image-container');
@@ -73,10 +74,15 @@ function showQuestion() {
 //  totalQuestionsEl.textContent = questions.length;
   
   optionsEl.innerHTML = question.options.map(opt => `
-    <button class="option" data-letter="${opt.letter}">
-      ${opt.letter}: ${opt.text}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect option" data-letter="${opt.letter}">
+      <span class="option-letter">${opt.letter}:</span> ${opt.text}
     </button>
   `).join("");
+  
+  // Upgrade the dynamically created MDL elements
+  if (typeof componentHandler !== 'undefined') {
+    componentHandler.upgradeElements(optionsEl);
+  }
 
   // Add click handlers
   optionsEl.querySelectorAll(".option").forEach(btn => {
@@ -105,10 +111,10 @@ function handleAnswer(e) {
   );
 
   // Always highlight correct answer
-  correctButton.classList.add('correct-answer', 'show-correct');
+  correctButton.classList.add('correct-answer', 'show-correct', 'mdl-button--accent');
   
   if (selectedButton.dataset.letter === question.correctAnswer) {
-    selectedButton.classList.add('correct');
+    selectedButton.classList.add('correct', 'mdl-button--accent');
     score++;
     correctCount++;
   } else {
@@ -142,6 +148,10 @@ function initializeQuiz() {
 function updateStatsDisplay() {
   document.getElementById('correct-count').textContent = correctCount;
   document.getElementById('wrong-count').textContent = wrongCount;
+  
+  // Update the badges in the header
+  correctBadge.setAttribute('data-badge', correctCount);
+  wrongBadge.setAttribute('data-badge', wrongCount);
 }
 
 // Start quiz
@@ -190,11 +200,16 @@ function initImageGallery() {
   // Create gallery buttons
   imageFiles.forEach(file => {
     const btn = document.createElement('button');
-    btn.className = 'gallery-button';
+    btn.className = 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect gallery-button';
     btn.textContent = file.replace('.svg', '').replace('_', ' ');
     btn.addEventListener('click', () => showImageModal(file));
     buttonsContainer.appendChild(btn);
   });
+  
+  // Upgrade the dynamically created MDL elements
+  if (typeof componentHandler !== 'undefined') {
+    componentHandler.upgradeElements(buttonsContainer);
+  }
 
   // Modal controls
   closeBtn.addEventListener('click', () => modal.style.display = 'none');
@@ -214,5 +229,12 @@ async function showImageModal(filename) {
   }
 }
 
-// Initialize gallery after DOM loads
-document.addEventListener('DOMContentLoaded', initImageGallery);
+// Initialize gallery and upgrade MDL components after DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+  initImageGallery();
+  
+  // Ensure MDL is properly initialized for dynamically created elements
+  if (typeof componentHandler !== 'undefined') {
+    componentHandler.upgradeDom();
+  }
+});

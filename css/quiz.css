@@ -1,6 +1,7 @@
-/* Mobile-first quiz styles */
+/* Mobile-first quiz styles with Material Design */
 :root {
-  --primary-color: #4a6bff;
+  --primary-color: #3f51b5; /* Indigo - MDL primary color */
+  --accent-color: #ff4081; /* Pink - MDL accent color */
   --correct-color: #4caf50;
   --incorrect-color: #f44336;
   --text-color: #333;
@@ -9,19 +10,24 @@
 }
 
 /* Base layout */
-main {
-  max-width: calc(100% - 220px);
-  padding-right: 220px;
+.mdl-layout__content {
+  padding: 16px;
 }
 
 .quiz-container {
-  max-width: 100%;
-  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.mdl-grid {
+  max-width: 960px;
   margin: 0 auto;
 }
 
 .question-header {
-  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .question-id {
@@ -31,9 +37,9 @@ main {
   margin-bottom: 0.5rem;
 }
 
-.question-text {
+#question-text {
   font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--text-color);
   line-height: 1.5;
 }
@@ -43,51 +49,51 @@ main {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
+  width: 100%;
 }
 
-.answer-option {
-  padding: 0.8rem 1rem;
-  border: 2px solid var(--light-gray);
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  transition: all var(--transition-speed) ease;
-  text-align: center;
-  font-size: 1rem;
+.option {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  height: auto;
+  line-height: 1.5;
+  white-space: normal;
 }
 
-.answer-option:hover {
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
+.option-letter {
+  font-weight: bold;
+  margin-right: 8px;
 }
 
 /* Answer states */
-.answer-option.correct {
-  background: #e8f5e9;
-  border-color: var(--correct-color);
+.option.correct {
+  background: #e8f5e9 !important;
+  color: var(--text-color) !important;
   position: relative;
-  color: var(--text-color);
 }
-.answer-option.correct::after {
+.option.correct::after {
   content: "✓";
   color: var(--correct-color);
   margin-left: 10px;
+  font-weight: bold;
 }
 
-.answer-option.incorrect {
-  background: #ffebee;
-  border-color: var(--incorrect-color);
-  color: var(--text-color);
+.option.incorrect {
+  background: #ffebee !important;
+  color: var(--text-color) !important;
 }
-.answer-option.incorrect::after {
+.option.incorrect::after {
   content: "✕";
   color: var(--incorrect-color);
   margin-left: 10px;
+  font-weight: bold;
 }
 
 .show-correct {
   animation: pulse-correct 0.5s ease;
+  box-shadow: 0 2px 10px rgba(76, 175, 80, 0.5) !important;
 }
 
 @keyframes pulse-correct {
@@ -100,12 +106,19 @@ main {
 .image-container {
   margin: 1rem 0;
   text-align: center;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
 }
 
 .image-container svg {
   max-width: 100%;
   height: auto;
-  max-height: 200px;
+  max-height: 250px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 }
 
 /* Loading and error states */
@@ -144,64 +157,59 @@ main {
 }
 
 /* Navigation */
-.nav-buttons {
+.mdl-card__actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  padding: 16px;
 }
 
-.nav-button {
-  padding: 0.8rem 1.5rem;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background var(--transition-speed) ease;
+#prev-btn, #next-btn {
+  min-width: 120px;
 }
 
-.nav-button:hover {
-  background: #3a5bef;
+#prev-btn .material-icons,
+#next-btn .material-icons {
+  vertical-align: middle;
+  margin: 0 4px;
 }
 
-.nav-button:disabled {
-  background: #cccccc;
+#prev-btn:disabled,
+#next-btn:disabled {
+  background: #cccccc !important;
+  color: #666666 !important;
   cursor: not-allowed;
 }
 
-/* Score display */
-.score-display {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  font-weight: bold;
+/* Header badges */
+.mdl-badge {
+  margin: 0 12px;
 }
 
-/* Sidebar styling */
-.stats-sidebar {
-  height: 100px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-left: 1px solid #dee2e6;
+#correct-badge .material-icons {
+  color: var(--correct-color);
+}
+
+#wrong-badge .material-icons {
+  color: var(--incorrect-color);
+}
+
+/* Drawer styling */
+.mdl-layout__drawer .stats {
+  padding: 16px;
+}
+
+.mdl-layout__drawer h5 {
+  margin-top: 0;
 }
 
 /* Tablet and larger */
 @media (min-width: 768px) {
-  .quiz-container {
-    max-width: 700px;
-    padding: 2rem;
-  }
-
   .answers-grid {
     grid-template-columns: 1fr 1fr;
   }
 
   .image-container svg {
-    max-height: 300px;
+    max-height: 350px;
   }
 }
 /* Answer feedback enhancements */
@@ -213,38 +221,25 @@ main {
   border-left: 4px solid #f44336 !important;
 }
 
-.show-correct {
-  animation: pulse-correct 0.5s ease;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
-}
-
 .correct-answer {
   border: 2px solid #4caf50 !important;
 }
 /* Image Gallery Styles */
 .image-gallery {
   margin-top: 2rem;
-  padding: 1rem;
-  border-top: 1px solid #ddd;
 }
 
 .gallery-buttons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.5rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
 }
 
 .gallery-button {
-  padding: 0.5rem;
-  background: #f0f0f0;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.gallery-button:hover {
-  background: #e0e0e0;
+  height: auto;
+  line-height: 1.2;
+  padding: 12px 8px;
+  white-space: normal;
 }
 
 /* Modal Styles */
@@ -257,30 +252,33 @@ main {
   height: 100%;
   background: rgba(0,0,0,0.8);
   z-index: 1000;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal-content {
   position: relative;
   margin: 5% auto;
-  padding: 20px;
   width: 90%;
   max-width: 800px;
   background: white;
-  border-radius: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.modal-content .mdl-card__title {
+  display: flex;
+  align-items: center;
+  padding: 16px;
 }
 
 .close {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  font-size: 28px;
-  cursor: pointer;
+  color: rgba(0,0,0,0.54);
 }
 
 .full-image {
   width: 100%;
   height: 1500px;
-  border: 1px solid #ddd;
-  overflow: scroll;
+  border: none;
+  overflow: auto;
+  background: white;
 }
