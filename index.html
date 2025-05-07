@@ -95,7 +95,25 @@
                 </button>
             </div>
             <div class="mdl-card__media">
-                <svg id="modal-image" class="full-image"></svg>
+                <div class="image-scroll-container">
+                    <svg id="modal-image" class="full-image" width="150%" height="150%" viewBox="0 0 800 800"></svg>
+                </div>
+                <!-- Scroll indicators -->
+                <div class="scroll-indicator scroll-left" id="scroll-left">
+                    <i class="material-icons">keyboard_arrow_left</i>
+                </div>
+                <div class="scroll-indicator scroll-right" id="scroll-right">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+                <div class="scroll-indicator scroll-up" id="scroll-up">
+                    <i class="material-icons">keyboard_arrow_up</i>
+                </div>
+                <div class="scroll-indicator scroll-down" id="scroll-down">
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </div>
+                <!-- Swipe hint indicators for mobile -->
+                <div class="swipe-hint swipe-horizontal"></div>
+                <div class="swipe-hint swipe-vertical"></div>
             </div>
         </div>
     </div>
