@@ -25,19 +25,6 @@
             </div>
         </div>
     </header>
-    
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Статистика</span>
-        <nav class="mdl-navigation">
-            <div class="mdl-navigation__link">
-                <div class="stats">
-                    <h5>Чо как идет</h5>
-                    <div>Попал: <span id="correct-count">0</span></div>
-                    <div>Мимо: <span id="wrong-count">0</span></div>
-                </div>
-            </div>
-        </nav>
-    </div>
 
     <main class="mdl-layout__content">
         <div class="mdl-grid">
@@ -50,7 +37,7 @@
                 </div>
                 
                 <div class="mdl-card__supporting-text">
-                    <div id="image-container" aria-label="Question diagram" aria-live="polite" role="img" class="mdl-card__media">
+                    <div hidden="true" id="image-container" aria-label="Question diagram" aria-live="polite" role="img" class="mdl-card__media">
                         <svg class="quiz-image" data-current-file="" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     
