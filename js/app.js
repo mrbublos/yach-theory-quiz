@@ -126,7 +126,7 @@ prevBtn.addEventListener('click', () => {
 });
 
 nextBtn.addEventListener('click', () => {
-  if (currentQuestionIndex < questions.length - 1) {
+  if (currentQuestionIndex < allQuestions.length - 1) {
     currentQuestionIndex++;
     resetQuestionState();
     showQuestion();
