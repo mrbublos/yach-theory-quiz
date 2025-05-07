@@ -1,9 +1,13 @@
+// Import performance tracking
+import { QuestionPerformance, getPerformanceColor } from './questionPerformance.js';
+
 // Initialize quiz state
 let currentQuestionIndex = 0;
 let score = 0;
 let correctCount = 0;
 let wrongCount = 0;
 let shuffledQuestions = [];
+const performanceTracker = new QuestionPerformance();
 
 // State management functions
 function saveState() {
@@ -113,7 +117,8 @@ function handleAnswer(e) {
   // Always highlight correct answer
   correctButton.classList.add('correct-answer', 'show-correct', 'mdl-button--accent');
   
-  if (selectedButton.dataset.letter === question.correctAnswer) {
+  const isCorrect = selectedButton.dataset.letter === question.correctAnswer;
+  if (isCorrect) {
     selectedButton.classList.add('correct', 'mdl-button--accent');
     score++;
     correctCount++;
@@ -121,6 +126,9 @@ function handleAnswer(e) {
     selectedButton.classList.add('incorrect');
     wrongCount++;
   }
+
+  // Record the attempt
+  performanceTracker.recordAttempt(question.id, isCorrect);
 
   // Scroll to correct answer if not fully visible
   correctButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -131,12 +139,13 @@ function handleAnswer(e) {
   });
 
   updateStatsDisplay();
+  updateHeatmap();
   saveState();
 }
 
 // Quiz initialization
 function initializeQuiz() {
-  shuffledQuestions = [...allQuestions].sort(() => Math.random() - 0.5);
+  shuffledQuestions = performanceTracker.getSmartShuffledQuestions(allQuestions);
   currentQuestionIndex = 0;
   score = 0;
   correctCount = 0;
@@ -389,9 +398,71 @@ function initializeScrollControls() {
 // Initialize gallery and upgrade MDL components after DOM loads
 document.addEventListener('DOMContentLoaded', function() {
   initImageGallery();
+  initHeatmap();
   
   // Ensure MDL is properly initialized for dynamically created elements
   if (typeof componentHandler !== 'undefined') {
     componentHandler.upgradeDom();
   }
 });
+
+// Initialize heatmap
+function initHeatmap() {
+  const heatmapContainer = document.createElement('div');
+  heatmapContainer.className = 'performance-heatmap';
+  
+  const title = document.createElement('div');
+  title.className = 'heatmap-title';
+  title.textContent = window.heatmapTranslations.title;
+  
+  const grid = document.createElement('div');
+  grid.className = 'heatmap-grid';
+  
+  heatmapContainer.appendChild(title);
+  heatmapContainer.appendChild(grid);
+  
+  // Insert heatmap after the quiz container
+  document.querySelector('.image-gallery').after(heatmapContainer);
+  
+  updateHeatmap();
+}
+
+// Update heatmap display
+function updateHeatmap() {
+  const grid = document.querySelector('.heatmap-grid');
+  grid.innerHTML = '';
+  
+  allQuestions.forEach(question => {
+    const performance = performanceTracker.getPerformance(question.id);
+    const link = document.createElement('a');
+    link.className = 'performance-link';
+    link.href = '#';
+    
+    const percentage = Math.round(performance.percentage);
+    const textColor = getPerformanceColor(percentage);
+    
+    const performanceText = document.createElement('span');
+    performanceText.className = 'performance-text';
+    performanceText.style.color = textColor;
+    performanceText.textContent = `Q${question.id}: ${percentage}%`;
+    
+    link.appendChild(performanceText);
+    
+    // Add click handler for navigation
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const index = shuffledQuestions.findIndex(q => q.id === question.id);
+      if (index !== -1) {
+        currentQuestionIndex = index;
+        resetQuestionState();
+        showQuestion();
+        saveState();
+        
+        // Scroll the question into view
+        document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    
+    grid.appendChild(link);
+  });
+}

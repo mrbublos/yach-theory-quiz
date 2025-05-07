@@ -455,3 +455,103 @@ body::after {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* Performance Heatmap */
+.performance-heatmap {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-top: 3px solid var(--primary-color);
+  position: relative;
+}
+
+.heatmap-title {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.heatmap-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.performance-link {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.performance-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.performance-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  font-size: 0.9em;
+}
+
+.heatmap-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.heatmap-cell .question-id {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.heatmap-cell .performance {
+  font-size: 0.9rem;
+}
+
+.heatmap-cell .attempts {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* Responsive adjustments for heatmap */
+@media (max-width: 600px) {
+  .heatmap-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  }
+  
+  .heatmap-cell {
+    min-height: 60px;
+    padding: 0.25rem;
+  }
+  
+  .heatmap-cell .question-id {
+    font-size: 0.9rem;
+  }
+  
+  .heatmap-cell .performance {
+    font-size: 0.8rem;
+  }
+  
+  .heatmap-cell .attempts {
+    font-size: 0.7rem;
+  }
+}

@@ -15,7 +15,7 @@
 <body class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title" id="quiz-title">Вопросы для машит 30</span>
+            <span class="mdl-layout-title" id="quiz-title">Mашит 30</span>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-badge mdl-badge--overlap" data-badge="0" id="correct-badge">
                 <span class="material-icons">check_circle</span>
@@ -83,7 +83,17 @@
 
     <script src="questions.js"></script>
     <script src="questions-full.js"></script>
-    <script src="js/app.js"></script>
+    <script type="module" src="js/questionPerformance.js"></script>
+    <script type="module" src="js/app.js"></script>
+
+    <!-- Performance Heatmap Translations -->
+    <script>
+        window.heatmapTranslations = {
+            title: 'Статистика по вопросам',
+            tries: 'попыток',
+            correct: 'правильно'
+        };
+    </script>
 
     <div id="image-modal" class="modal">
         <div class="modal-content mdl-card mdl-shadow--8dp">
@@ -96,24 +106,8 @@
             </div>
             <div class="mdl-card__media">
                 <div class="image-scroll-container">
-                    <svg id="modal-image" class="full-image" width="150%" height="150%" viewBox="0 0 800 800"></svg>
+                    <svg id="modal-image" class="full-image" width="150%" height="150%" viewBox="0 0 800 1000"></svg>
                 </div>
-                <!-- Scroll indicators -->
-                <div class="scroll-indicator scroll-left" id="scroll-left">
-                    <i class="material-icons">keyboard_arrow_left</i>
-                </div>
-                <div class="scroll-indicator scroll-right" id="scroll-right">
-                    <i class="material-icons">keyboard_arrow_right</i>
-                </div>
-                <div class="scroll-indicator scroll-up" id="scroll-up">
-                    <i class="material-icons">keyboard_arrow_up</i>
-                </div>
-                <div class="scroll-indicator scroll-down" id="scroll-down">
-                    <i class="material-icons">keyboard_arrow_down</i>
-                </div>
-                <!-- Swipe hint indicators for mobile -->
-                <div class="swipe-hint swipe-horizontal"></div>
-                <div class="swipe-hint swipe-vertical"></div>
             </div>
         </div>
     </div>
