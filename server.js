@@ -8,6 +8,7 @@ app.use(express.static(__dirname));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/pics', express.static(path.join(__dirname, 'pics')));
+app.use('/lights', express.static(path.join(__dirname, 'lights')));
 
 // Handle SVG MIME type
 express.static.mime.define({'image/svg+xml': ['svg']});

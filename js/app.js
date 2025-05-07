@@ -108,7 +108,7 @@ function showQuestion() {
 }
 
 function handleAnswer(e) {
-  const selectedButton = e.target;
+  const selectedButton = e.target.parentNode;
   const question = shuffledQuestions[currentQuestionIndex];
   const correctButton = Array.from(optionsEl.children).find(
     btn => btn.dataset.letter === question.correctAnswer
@@ -119,7 +119,7 @@ function handleAnswer(e) {
   
   const isCorrect = selectedButton.dataset.letter === question.correctAnswer;
   if (isCorrect) {
-    selectedButton.classList.add('correct', 'mdl-button--accent');
+    selectedButton.classList.add('correct');
     score++;
     correctCount++;
   } else {
@@ -190,7 +190,7 @@ function resetQuestionState() {
   // Clear selection and enable options
   optionsEl.querySelectorAll('.option').forEach(btn => {
     btn.disabled = false;
-    btn.classList.remove('correct', 'incorrect');
+    btn.classList.remove('correct', 'incorrect', 'correct-answer', 'show-correct', 'mdl-button--accent');
   });
 }
 
