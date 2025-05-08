@@ -399,13 +399,6 @@ body::after {
   background: rgba(255, 255, 255, 0.98);
 }
 
-.full-image {
-  width: 150%;
-  height: 150%;
-  border: none;
-  background: rgba(255, 255, 255, 0.98);
-}
-
 /* Scroll indicators */
 .scroll-indicator {
   position: absolute;
@@ -548,20 +541,20 @@ body::after {
   .heatmap-grid {
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
   }
-  
+
   .heatmap-cell {
     min-height: 60px;
     padding: 0.25rem;
   }
-  
+
   .heatmap-cell .question-id {
     font-size: 0.9rem;
   }
-  
+
   .heatmap-cell .performance {
     font-size: 0.8rem;
   }
-  
+
   .heatmap-cell .attempts {
     font-size: 0.7rem;
   }

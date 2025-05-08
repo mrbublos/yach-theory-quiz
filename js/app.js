@@ -144,8 +144,8 @@ function resetQuestionState() {
 // Image Gallery Functionality
 function initImageGallery() {
   const imageFiles = [
-    '1-19.svg', '20-39.svg', '40-58.svg',
-    '59-74.svg', '75-90.svg', '91-110.svg', '111-126.svg', 'basic_light.svg', 'boats.svg'
+    '1-19.png', '20-39.png', '40-58.png',
+    '59-74.png', '75-90.png', '91-110.png', '111-126.png', 'basic_light.png', 'boats.png'
   ];
 
   const buttonsContainer = document.getElementById('image-buttons');
@@ -157,7 +157,7 @@ function initImageGallery() {
   imageFiles.forEach(file => {
     const btn = document.createElement('button');
     btn.className = 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect gallery-button';
-    btn.textContent = file.replace('.svg', '').replace('_', ' ');
+    btn.textContent = file.replace('.png', '').replace('_', ' ');
     btn.addEventListener('click', () => showImageModal(file));
     buttonsContainer.appendChild(btn);
   });
@@ -174,35 +174,28 @@ function initImageGallery() {
   });
 }
 
-const svgCache = {};
-async function loadSvg(filename) {
-    if (svgCache[filename]) {
-        return svgCache[filename];
-    }
+function showImageModal(filename) {
+  // Get the preloaded image
+  const preloadedImage = document.getElementById(filename.replace('.png', ''));
+  if (!preloadedImage) {
+    console.error('Preloaded image not found:', filename);
+    return;
+  }
 
-    const response = await fetch(`pics/${filename}`);
-    const svgContent = await response.text();
-    return svgCache[filename] = svgContent;
-}
-
-
-async function showImageModal(filename) {
-  try {
-    const svgContent = await loadSvg(filename);
-    document.getElementById('modal-image').innerHTML = svgContent;
-    
-    // Show the modal
-    const modal = document.getElementById('image-modal');
-    modal.style.display = 'block';
-    
-    // Reset scroll position
-    const scrollContainer = document.querySelector('.image-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.scrollTop = 0;
-      scrollContainer.scrollLeft = 0;
-    }
-  } catch (error) {
-    console.error('Error loading image:', error);
+  // Set the image source
+  const modalImage = document.getElementById('modal-image');
+  modalImage.src = preloadedImage.src;
+  modalImage.alt = preloadedImage.alt;
+  
+  // Show the modal
+  const modal = document.getElementById('image-modal');
+  modal.style.display = 'block';
+  
+  // Reset scroll position
+  const scrollContainer = document.querySelector('.image-scroll-container');
+  if (scrollContainer) {
+    scrollContainer.scrollTop = 0;
+    scrollContainer.scrollLeft = 0;
   }
 }
 
