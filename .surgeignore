@@ -6,3 +6,4 @@ node_modules
 mashitquiz.iml
 package-lock.json
 memory-bank
+*.md
