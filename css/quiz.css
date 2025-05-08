@@ -12,6 +12,11 @@
   --sea-dark: #80deea;
 }
 
+.mdl-card__media {
+    background: white;
+    overflow: auto;
+}
+
 /* Sea-themed background */
 body {
   background: linear-gradient(135deg, var(--sea-light) 0%, var(--sea-medium) 50%, var(--sea-dark) 100%);
