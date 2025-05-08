@@ -46,11 +46,11 @@ function showQuestion() {
 
   // Handle image display
   if (question.imageRef) {
-    renderGalleryButton(question.imageRef)
+    imageContainer.hidden = false;
+    const image = renderGalleryButton(question.imageRef)
+    imageContainer.hidden = !image;
   } else {
-    imageContainer.classList.remove('has-image', 'error');
-    svgEl.innerHTML = '';
-    svgEl.removeAttribute('data-current-file');
+    imageContainer.hidden = true;
   }
 
   // Update navigation state
@@ -59,6 +59,11 @@ function showQuestion() {
 }
 
 function renderGalleryButton(imageRef) {
+    imageContainer.classList.remove('has-image', 'error');
+    imageContainer.innerHTML = '';
+    const image = document.querySelector('#preloaded-images #p' + imageRef.number);
+    image && imageContainer.append(image);
+    return image
 }
 
 function handleAnswer(e) {
@@ -176,7 +181,7 @@ function initImageGallery() {
 
 function showImageModal(filename) {
   // Get the preloaded image
-  const preloadedImage = document.getElementById(filename.replace('.png', ''));
+  const preloadedImage = document.getElementById('p' + filename.replace('.png', ''));
   if (!preloadedImage) {
     console.error('Preloaded image not found:', filename);
     return;
