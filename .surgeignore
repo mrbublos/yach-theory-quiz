@@ -3,7 +3,11 @@ server.js
 .idea
 node_modules
 .gitignore
-mashitquiz.iml
+*.iml
 package-lock.json
 memory-bank
 *.md
+*.txt
+questions.js
+src
+gallery_test.html
