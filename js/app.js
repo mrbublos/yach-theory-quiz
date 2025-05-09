@@ -1,6 +1,8 @@
 // Import performance tracking
 import { QuestionPerformance, getPerformanceColor } from './questionPerformance.js';
 
+const requestedQuestionNumber = window.location.search.replace('?', '') || 0;
+
 // Initialize quiz state
 let currentQuestionIndex = 0;
 let score = 0;
@@ -106,10 +108,11 @@ function handleAnswer(e) {
 // Quiz initialization
 function initializeQuiz() {
   shuffledQuestions = performanceTracker.getSmartShuffledQuestions(allQuestions);
-  currentQuestionIndex = 0;
+  const requestedQuestion =requestedQuestionNumber ? shuffledQuestions.find((it) => it.id == requestedQuestionNumber) : 0;
+  currentQuestionIndex = requestedQuestion ? Math.max(shuffledQuestions.indexOf(requestedQuestion), 0) : 0;
   score = 0;
-  correctCount = 0;
-  wrongCount = 0;
+  correctCount = window.sessionStorage.getItem('correctCount') || 0;
+  wrongCount = window.sessionStorage.getItem('wrongCount') || 0;
   updateStatsDisplay();
   showQuestion();
 }
@@ -118,6 +121,9 @@ function updateStatsDisplay() {
   // Update the badges in the header
   correctBadge.setAttribute('data-badge', correctCount);
   wrongBadge.setAttribute('data-badge', wrongCount);
+
+  window.sessionStorage.setItem('correctCount', correctCount);
+  window.sessionStorage.setItem('wrongCount', wrongCount);
 }
 
 // Start quiz
