@@ -46,7 +46,6 @@ function showQuestion() {
 
   // Handle image display
   if (question.imageRef) {
-    imageContainer.hidden = false;
     const image = renderGalleryButton(question.imageRef)
     imageContainer.hidden = !image;
   } else {
@@ -61,9 +60,12 @@ function showQuestion() {
 function renderGalleryButton(imageRef) {
     imageContainer.classList.remove('has-image', 'error');
     imageContainer.innerHTML = '';
-    const image = document.querySelector('#preloaded-images #p' + imageRef.number);
-    image && imageContainer.append(image);
-    return image
+    const imageRefs = Array.isArray(imageRef) ? imageRef : [imageRef];
+    for (const imageRef of imageRefs) {
+        const image = document.querySelector('#preloaded-images #p' + imageRef.number);
+        image && imageContainer.append(image);
+    }
+    return imageRefs.length;
 }
 
 function handleAnswer(e) {
