@@ -48,15 +48,48 @@ export class QuestionPerformance {
     return shuffleArray(questions).sort((a, b) => {
       const perfA = this.performanceData[a.id];
       const perfB = this.performanceData[b.id];
-      
+
       // First compare percentages
       if (perfA.percentage !== perfB.percentage) {
         return perfA.percentage - perfB.percentage;
       }
-      
+
       // If percentages are equal, compare attempts
       return perfA.attempts - perfB.attempts;
     });
+  }
+
+  getGroupedQuestions(questions) {
+    // Initialize performance data for all questions
+    questions.forEach(q => this.initializeQuestion(q.id));
+
+    // Split questions into two groups based on 90% completion rate
+    const highPerformers = [];
+    const otherQuestions = [];
+
+    questions.forEach(q => {
+      const perf = this.performanceData[q.id];
+      if (perf.percentage >= 90) {
+        highPerformers.push(q);
+      } else {
+        otherQuestions.push(q);
+      }
+    });
+
+    // Sort each group by question number
+    const sortByNumber = (a, b) => {
+      const numA = parseInt(a.id);
+      const numB = parseInt(b.id);
+      return numA - numB;
+    };
+
+    highPerformers.sort(sortByNumber);
+    otherQuestions.sort(sortByNumber);
+
+    return {
+      highPerformers,
+      otherQuestions
+    };
   }
 }
 

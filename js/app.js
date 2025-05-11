@@ -245,8 +245,9 @@ function initHeatmap() {
 function updateHeatmap() {
   const grid = document.querySelector('.heatmap-grid');
   grid.innerHTML = '';
-  
-  allQuestions.forEach(question => {
+  const { highPerformers, otherQuestions } = performanceTracker.getGroupedQuestions(allQuestions);
+
+  [...otherQuestions, ...highPerformers].forEach(question => {
     const performance = performanceTracker.getPerformance(question.id);
     const link = document.createElement('a');
     link.className = 'performance-link';
