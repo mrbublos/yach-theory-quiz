@@ -47,8 +47,8 @@ function showQuestion() {
   });
 
   // Handle image display
-  if (question.imageRef) {
-    const image = renderGalleryButton(question.imageRef)
+  if (extractedElements[question.id]?.length) {
+    const image = renderGalleryButton(extractedElements[question.id])
     imageContainer.hidden = !image;
   } else {
     imageContainer.hidden = true;
@@ -64,7 +64,7 @@ function renderGalleryButton(imageRef) {
     imageContainer.innerHTML = '';
     const imageRefs = Array.isArray(imageRef) ? imageRef : [imageRef];
     for (const imageRef of imageRefs) {
-        const image = document.querySelector('#preloaded-images #p' + imageRef.number);
+        const image = document.querySelector('#preloaded-images #p' + imageRef);
         image && imageContainer.append(image);
     }
     return imageRefs.length;
