@@ -1126,5 +1126,3 @@ const extractedElements = {
   ],
   "362": []
 };
-
-module.exports = extractedElements;

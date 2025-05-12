@@ -47,8 +47,8 @@ function showQuestion() {
   });
 
   // Handle image display
-  if (extractedElements[question.id]?.length) {
-    const image = renderGalleryButton(extractedElements[question.id])
+  if (question.imageRef || extractedElements[question.id]?.length) {
+    const image = renderGalleryButton(question.id, question.imageRef)
     imageContainer.hidden = !image;
   } else {
     imageContainer.hidden = true;
@@ -59,11 +59,12 @@ function showQuestion() {
   nextBtn.disabled = currentQuestionIndex === allQuestions.length - 1;
 }
 
-function renderGalleryButton(imageRef) {
+function renderGalleryButton(id, imageRef) {
     imageContainer.classList.remove('has-image', 'error');
     imageContainer.innerHTML = '';
-    const imageRefs = Array.isArray(imageRef) ? imageRef : [imageRef];
-    for (const imageRef of imageRefs) {
+    const imageRefs = (Array.isArray(imageRef) ? imageRef : [imageRef]).map((it)=>it.number);
+    const newRefs = extractedElements[id];
+    for (const imageRef of new Set([...imageRefs, ...newRefs])) {
         const image = document.querySelector('#preloaded-images #p' + imageRef);
         image && imageContainer.append(image);
     }
