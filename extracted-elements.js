@@ -997,7 +997,7 @@ const extractedElements = {
     "G"
   ],
   "332": [
-    "022",
+    "B",
     "1",
     "66",
     "J"
