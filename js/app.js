@@ -48,12 +48,7 @@ function showQuestion() {
   });
 
   // Handle image display
-  if (question.imageRef || extractedElements[question.id]?.length) {
-    const image = renderGalleryButton(question.id, question.imageRef)
-    imageContainer.hidden = !image;
-  } else {
-    imageContainer.hidden = true;
-  }
+  renderGalleryButton(question.id, question.imageRef)
 
   // Update navigation state
   prevBtn.disabled = currentQuestionIndex === 0;
@@ -64,7 +59,7 @@ function renderGalleryButton(id, imageRef) {
     imageContainer.classList.remove('has-image', 'error');
     imageContainer.innerHTML = '';
     const imageRefs = (Array.isArray(imageRef) ? imageRef : [imageRef]).filter((it) => !!it?.number).map((it)=>it.number);
-    const newRefs = extractedElements[id];
+    const newRefs = extractedElements[id] || [];
     for (const imageRef of new Set([...imageRefs, ...newRefs])) {
         const image = document.querySelector('#preloaded-images #p' + imageRef)?.src
         if (!image) {
