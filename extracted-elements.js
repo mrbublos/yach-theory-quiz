@@ -20,7 +20,6 @@ const extractedElements = {
     "66"
   ],
   "7": [
-    "50",
     "61"
   ],
   "8": [
