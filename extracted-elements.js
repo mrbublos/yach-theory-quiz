@@ -760,7 +760,6 @@ const extractedElements = {
     "C"
   ],
   "260": [
-    "200",
     "84",
     "98",
     "D",
