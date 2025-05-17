@@ -681,7 +681,6 @@ const extractedElements = {
   "225": [
     "36",
     "40",
-    "5",
     "H",
     "K"
   ],
