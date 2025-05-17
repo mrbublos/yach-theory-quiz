@@ -26,6 +26,7 @@ const totalQuestionsEl = document.querySelector('.total-questions');
 function showQuestion() {
   const question = shuffledQuestions[currentQuestionIndex];
   document.getElementById('current-qid').textContent = question.id;
+  document.getElementById('current-correct-percentage').textContent = heatmap[question.id].percentage;
   questionEl.textContent = question.question;
 //  currentQuestionEl.textContent = currentQuestionIndex + 1;
 //  totalQuestionsEl.textContent = questions.length;
