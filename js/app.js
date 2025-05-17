@@ -65,8 +65,15 @@ function renderGalleryButton(id, imageRef) {
     const imageRefs = (Array.isArray(imageRef) ? imageRef : [imageRef]).map((it)=>it.number);
     const newRefs = extractedElements[id];
     for (const imageRef of new Set([...imageRefs, ...newRefs])) {
-        const image = document.querySelector('#preloaded-images #p' + imageRef);
-        image && imageContainer.append(image);
+        const image = document.querySelector('#preloaded-images #p' + imageRef)?.src
+        if (!image) {
+            console.log("No image " + imageRef);
+            continue
+        }
+
+        const imgElement = document.createElement('img');
+        imgElement.src = image;
+        image && imageContainer.appendChild(imgElement);
     }
     return imageRefs.length;
 }
