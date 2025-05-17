@@ -944,7 +944,6 @@ const extractedElements = {
     "J"
   ],
   "322": [
-    "200",
     "84",
     "98",
     "D",
