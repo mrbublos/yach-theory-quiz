@@ -267,7 +267,7 @@ function updateHeatmap() {
     const performanceText = document.createElement('span');
     performanceText.className = 'performance-text';
     performanceText.style.color = textColor;
-    performanceText.textContent = `Q${question.id}: ${percentage}%`;
+    performanceText.textContent = `Q${question.id}: ${percentage}%/${performance.attempts}`;
     
     link.appendChild(performanceText);
     
