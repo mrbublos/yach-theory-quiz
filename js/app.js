@@ -62,7 +62,7 @@ function showQuestion() {
 function renderGalleryButton(id, imageRef) {
     imageContainer.classList.remove('has-image', 'error');
     imageContainer.innerHTML = '';
-    const imageRefs = (Array.isArray(imageRef) ? imageRef : [imageRef]).map((it)=>it.number);
+    const imageRefs = (Array.isArray(imageRef) ? imageRef : [imageRef]).filter((it) => !!it?.number).map((it)=>it.number);
     const newRefs = extractedElements[id];
     for (const imageRef of new Set([...imageRefs, ...newRefs])) {
         const image = document.querySelector('#preloaded-images #p' + imageRef)?.src
